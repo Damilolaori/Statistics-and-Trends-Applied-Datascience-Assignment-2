@@ -260,7 +260,7 @@ print(china)
 corr_china= china.corr()
 print(corr_china)
 
-# heatmap showing the correlation for china using the indicators
+# parameters for plotting heatmap showing the correlation for china using the indicators
 plt.figure(figsize=(8,5))
 plt.imshow(china.corr(),cmap='Reds', interpolation = 'none')
 plt.colorbar()
@@ -277,7 +277,7 @@ for y in range(labels.shape[0]):
 
 # importing a necessary library to get the p-value
 from scipy import stats
-
+# parameters to find the p-value
 corr_china= pd.DataFrame(columns=['r', 'p'])
 for col in china:
     if pd.api.types.is_numeric_dtype(china[col]) and not '':
@@ -297,7 +297,7 @@ print(nigeria)
 corr_nigeria = nigeria.corr()
 print(corr_nigeria)
 
-# heatmap showing the correlation for Nigeria using the indicators
+# parameters for plotting heatmap showing the correlation for china using the indicators
 plt.figure(figsize=(8,5))
 plt.imshow(nigeria.corr(),cmap='Greens', interpolation = 'none')
 plt.colorbar()
@@ -312,6 +312,7 @@ for y in range(labels.shape[0]):
     for x in range(labels.shape[1]):
         plt.text(x, y, '{:.2f}'.format(labels[y, x]), ha='center', va='center', color='white')
 
+# parameters to find the p-value
 corr_nigeria= pd.DataFrame(columns=['r', 'p'])
 for col in nigeria:
     if pd.api.types.is_numeric_dtype(nigeria[col]) and not '':
