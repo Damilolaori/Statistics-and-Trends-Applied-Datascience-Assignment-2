@@ -227,7 +227,7 @@ def read_data_excel(excel_url, sheet_name, new_columns, countries):
     
     return data_CO2, data_CO2.transpose()
 
-# parameters for reading
+# parameters for reading data
 excel_url = ('https://api.worldbank.org/v2/en/indicator/EN.ATM.CO2E.KT?downloadformat=excel')
 sheet_name = 'Data'
 data_CO2 = pd.read_excel(excel_url, sheet_name=sheet_name, skiprows=3)
@@ -262,9 +262,18 @@ print(corr_china)
 
 # heatmap showing the correlation for china using the indicators
 plt.figure(figsize=(8,5))
-sns.heatmap(china.corr(),annot=True,cmap='Reds')
+plt.imshow(china.corr(),cmap='Reds', interpolation = 'none')
+plt.colorbar()
+plt.xticks(range(len(china.columns)), china.columns)
+plt.yticks(range(len(china.columns)), china.columns)
+plt.gcf().set_size_inches(8,8)
 plt.title('Correlation heatmap China')
 plt.show()
+
+labels= china.corr().values
+for y in range(labels.shape[0]):
+    for x in range(labels.shape[1]):
+        plt.text(x, y, '{:.2f}'.format(labels[y, x]), ha='center', va='center', color='white')
 
 # importing a necessary library to get the p-value
 from scipy import stats
@@ -290,14 +299,23 @@ print(corr_nigeria)
 
 # heatmap showing the correlation for Nigeria using the indicators
 plt.figure(figsize=(8,5))
-sns.heatmap(nigeria.corr(),annot=True,cmap='Greens')
+plt.imshow(nigeria.corr(),cmap='Greens', interpolation = 'none')
+plt.colorbar()
+plt.xticks(range(len(nigeria.columns)), nigeria.columns)
+plt.yticks(range(len(nigeria.columns)), nigeria.columns)
+plt.gcf().set_size_inches(8,8)
 plt.title('Correlation heatmap Nigeria')
 plt.show()
+
+labels= nigeria.corr().values
+for y in range(labels.shape[0]):
+    for x in range(labels.shape[1]):
+        plt.text(x, y, '{:.2f}'.format(labels[y, x]), ha='center', va='center', color='white')
 
 corr_nigeria= pd.DataFrame(columns=['r', 'p'])
 for col in nigeria:
     if pd.api.types.is_numeric_dtype(nigeria[col]) and not '':
-        r, p = stats.pearsonr(china['Urban Population'], nigeria[col])
+        r, p = stats.pearsonr(nigeria['Urban Population'], nigeria[col])
         corr_nigeria.loc[col] = [round(r,3), round(p,3)]
 print(corr_nigeria)
 
